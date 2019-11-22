@@ -6,7 +6,7 @@
 trigger:
 - master
 
-# Use strategy to create the multiplatform set
+
 strategy:
   matrix:
     ubuntu-18.04:
@@ -21,5 +21,11 @@ strategy:
 pool:
   vmImage: $(imageName)
 
-steps:
-- template: .azure-templates/cmake-steps.yml
+jobs:
+- job: Azure
+  steps:
+  - template: .azure-templates/cmake-steps.yml
+- job: Azure CentOS7
+  pool:
+    vmImage: 'ubuntu-16.04'
+  container: centos:7
