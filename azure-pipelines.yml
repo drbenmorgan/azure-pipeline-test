@@ -23,7 +23,7 @@ jobs:
   pool:
     vmImage: $(imageName)
   steps:
-  - script: brew ls
+  - script: brew install boost
     condition: startsWith(variables.imageName,'macos')
   - template: .azure-templates/cmake-steps.yml
 
