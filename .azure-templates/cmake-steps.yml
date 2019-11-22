@@ -3,7 +3,7 @@ steps:
   - task: CMake@1
     displayName: CMake Configure
     inputs:
-      cmakeArgs: '-DCMAKE_BUILD_MODE=Debug ..'
+      cmakeArgs: '-DCMAKE_BUILD_TYPE=Debug ..'
   - script: cmake --build ./build --config Debug
     displayName: CMake Build
   - script: ctest -VV -C Debug
