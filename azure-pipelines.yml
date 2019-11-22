@@ -6,26 +6,26 @@
 trigger:
 - master
 
-
-strategy:
-  matrix:
-    ubuntu-18.04:
-      imageName: 'ubuntu-18.04'
-    macos-10.14:
-      imageName: 'macos-10.14'
-    windows-2019:
-      imageName: 'windows-2019'
-    windows-2017:
-      imageName: 'vs2017-win2016'
-
-pool:
-  vmImage: $(imageName)
-
 jobs:
 - job: Azure
+  strategy:
+    matrix:
+      ubuntu-18.04:
+        imageName: 'ubuntu-18.04'
+      macos-10.14:
+        imageName: 'macos-10.14'
+      windows-2019:
+        imageName: 'windows-2019'
+      windows-2017:
+        imageName: 'vs2017-win2016'
+  pool:
+    vmImage: $(imageName)
   steps:
   - template: .azure-templates/cmake-steps.yml
-- job: Azure CentOS7
+
+- job: Docker CentOS7
   pool:
     vmImage: 'ubuntu-16.04'
   container: centos:7
+  steps:
+  - template: .azure-templates/cmake-steps.yml
