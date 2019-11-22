@@ -24,7 +24,7 @@ jobs:
     vmImage: $(imageName)
   steps:
   - script: brew ls
-    condition: startsWith($(imageName),'macos')
+    condition: startsWith(variables.imageName,'macos')
   - template: .azure-templates/cmake-steps.yml
 
 # Job that runs in a container on a VM
