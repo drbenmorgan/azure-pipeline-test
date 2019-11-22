@@ -14,6 +14,7 @@ jobs:
   steps:
   - script: echo hello from Ubuntu 18.04
   - task: CMake@1
+    inputs:
       cmakeArgs: '..'
 - job: macOS
   pool:
@@ -21,6 +22,7 @@ jobs:
   steps:
   - script: echo hello from macOS 10.14
   - task: CMake@1
+    inputs:
       cmakeArgs: '..'
 - job: Windows
   pool:
@@ -28,4 +30,5 @@ jobs:
   steps:
   - script: echo hello from Windows 2019
   - task: CMake@1
+    inputs:
       cmakeArgs: '..'
