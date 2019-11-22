@@ -39,5 +39,5 @@ jobs:
   - script: cmake --build ./build --config Debug
   - script: ctest -VV
     workingDirectory: ./build
-    displayName: ctest
+    displayName: ctest -C Debug
       
