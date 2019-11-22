@@ -14,15 +14,18 @@ jobs:
   steps:
   - script: echo hello from Ubuntu 18.04
   - task: CMake@1
+      cmakeArgs: '..'
 - job: macOS
   pool:
     vmImage: 'macOS-10.14'
   steps:
   - script: echo hello from macOS 10.14
   - task: CMake@1
+      cmakeArgs: '..'
 - job: Windows
   pool:
     vmImage: 'windows-2019'
   steps:
   - script: echo hello from Windows 2019
   - task: CMake@1
+      cmakeArgs: '..'
