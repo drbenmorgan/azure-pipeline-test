@@ -17,6 +17,7 @@ jobs:
     inputs:
       cmakeArgs: '-DCMAKE_BUILD_MODE=Debug ..'
   - script: cmake --build ./build --config Debug
+  - script: ./cppfs-test
 - job: macOS
   pool:
     vmImage: 'macOS-10.14'
@@ -26,6 +27,7 @@ jobs:
     inputs:
       cmakeArgs: '-DCMAKE_BUILD_MODE=Debug ..'
   - script: cmake --build ./build --config Debug
+  - script: ./cppfs-test
 - job: Windows
   pool:
     vmImage: 'windows-2019'
@@ -35,4 +37,5 @@ jobs:
     inputs:
       cmakeArgs: '-DCMAKE_BUILD_MODE=Debug ..'
   - script: cmake --build ./build --config Debug
+  - script: ./cppfs-test
       
