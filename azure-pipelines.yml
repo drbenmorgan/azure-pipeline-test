@@ -6,20 +6,18 @@
 trigger:
 - master
 
-# Try per-platform jobs, using template for the steps
-jobs:
-- job: Linux
-  pool:
-    vmImage: 'ubuntu-18.04'
-  steps:
-  - template: .azure-templates/cmake-steps.yml
-- job: macOS
-  pool:
-    vmImage: 'macOS-10.14'
-  steps:
-  - template: .azure-templates/cmake-steps.yml
-- job: Windows
-  pool:
-    vmImage: 'windows-2019'
-  steps:
-  - template: .azure-templates/cmake-steps.yml
+# Use strategy to create the multiplatform set
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-18.04'
+    mac:
+      imageName: 'macos-10.14'
+    windows:
+      imageName: 'windows-2019'
+
+pool:
+  vmImage: $(imageName)
+
+steps:
+- template: .azure-templates/cmake-steps.yml
