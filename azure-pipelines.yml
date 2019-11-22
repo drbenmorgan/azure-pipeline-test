@@ -9,12 +9,14 @@ trigger:
 # Use strategy to create the multiplatform set
 strategy:
   matrix:
-    linux:
+    ubuntu-18.04:
       imageName: 'ubuntu-18.04'
-    mac:
+    macos-10.14:
       imageName: 'macos-10.14'
-    windows:
+    windows-2019:
       imageName: 'windows-2019'
+    windows-2017:
+      imageName: 'vs2017-win2016'
 
 pool:
   vmImage: $(imageName)
