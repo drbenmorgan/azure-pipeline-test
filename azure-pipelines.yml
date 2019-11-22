@@ -38,4 +38,6 @@ jobs:
       cmakeArgs: '-DCMAKE_BUILD_MODE=Debug ..'
   - script: cmake --build ./build --config Debug
   - script: ctest -VV
+    workingDirectory: ./build
+    displayName: ctest
       
