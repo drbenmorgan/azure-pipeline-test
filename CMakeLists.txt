@@ -31,15 +31,21 @@ if(NOT CPPFS_IS_NATIVE)
   message(STATUS "CPPFS_IS_CPPFS: x${CPPFS_IS_CPPFS}x")
 
   if(NOT CPPFS_IS_STDCPPFS AND NOT CPPFS_IS_CPPFS)
-    message(STATUS "CPPFS_IS_BOOSTFS: xTRUEx")
-    find_package(Boost 1.69 REQUIRED filesystem)
+    set(CPPFS_IS_BOOSTFS TRUE)
+    message(STATUS "CPPFS_IS_BOOSTFS: x${CPPFS_IS_BOOSTFS}x")
+    find_package(Boost 1.63 REQUIRED filesystem)
   endif()
 endif()
-
 
 # Build
 add_executable(cppfs-test cppfs-test.cpp)
 target_compile_features(cppfs-test PUBLIC cxx_std_17)
+# Use genexes, but not one call per genex which allows them to be used unquoted
+# Can put the link genexs in one call but then have to quote them
+target_link_libraries(cppfs-test PRIVATE $<$<BOOL:${CPPFS_IS_STDCPPFS}>:stdc++fs>)
+target_link_libraries(cppfs-test PRIVATE $<$<BOOL:${CPPFS_IS_CPPFS}>:c++fs>)
+target_compile_definitions(cppfs-test PRIVATE $<$<BOOL:${CPPFS_IS_BOOSTFS}>:CPPFS_IS_BOOSTFS>)
+target_link_libraries(cppfs-test PRIVATE $<$<BOOL:${CPPFS_IS_BOOSTFS}>:Boost::filesystem>)
 
 # Test
 enable_testing()
