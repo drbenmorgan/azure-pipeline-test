@@ -8,7 +8,7 @@ try_compile(CPPFS_NATIVE_SUPPORT
   ${PROJECT_SOURCE_DIR}/cmake/cppfs-try-run.cpp
   CMAKE_FLAGS -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_STANDARD_REQUIRED=ON
   )
-message(STATUS "CPPFS_NATIVE: x${CPPFS_NATIVE}x")
+message(STATUS "CPPFS_NATIVE: x${CPPFS_NATIVE_SUPPORT}x")
 
 # 2. Native plus support lib (GNU/Clang)
 #    - Can be stdc++fs OR c++fs/c++experimental on Linux Clang
@@ -23,6 +23,7 @@ if(NOT CPPFS_NATIVE)
 
   # If we're running Clang/libc++, then if the above fails, check if c++fs works
   # That's from libc++ 7 and higher (before was c++experimental)
+  # ? How to detect which stdlib is in use?
 
   try_compile(CPPFS_NEEDS_CPPFS
     ${CMAKE_CURRENT_BINARY_DIR}/_check_cppfs/stdc++fs
@@ -31,6 +32,11 @@ if(NOT CPPFS_NATIVE)
     LINK_LIBRARIES c++fs
     )
   message(STATUS "CPPFS_NEEDS_CPPFS: x${CPPFS_NEEDS_CPPFS}x")
+
+  if(NOT CPPFS_NEEDS_STDCPPFS AND NOT CPPFS_NEEDS_CPPFS)
+    message(STATUS "CPPFS_NEEDS_BOOSTFS: xTRUEx")
+    find_package(Boost 1.69 REQUIRED filesystem)
+  endif()
 endif()
 
 # 3. None (so use Boost workaround)
