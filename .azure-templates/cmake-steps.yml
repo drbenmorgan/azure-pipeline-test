@@ -1,0 +1,11 @@
+# Steps are all the same, so store in a template
+steps:
+  - task: CMake@1
+    displayName: CMake Configure
+    inputs:
+      cmakeArgs: '-DCMAKE_BUILD_MODE=Debug ..'
+  - script: cmake --build ./build --config Debug
+    displayName: CMake Build
+  - script: ctest -VV --config Debug
+    displayName: CTest
+    workingDirectory: ./build
