@@ -1,6 +1,6 @@
 #include <iostream>
 
-#if CPPFS_IS_BOOSTFS
+#if defined(CPPFS_IS_BOOSTFS)
 #include <boost/filesystem.hpp>
 namespace fs = boost::filesystem;
 #else
@@ -21,12 +21,12 @@ void test_fs(const char* argv0) {
 
 int main(int argc, const char *argv[])
 {
-#if defined(__cpp_lib_filesystem)
+#if defined(CPPFS_IS_BOOSTFS)
+  std::cout << "boost::filesystem" << std::endl;
+#elif defined(__cpp_lib_filesystem)
   std::cout << "__cpp_lib_filesystem!" << std::endl;
 #elif defined(__cpp_lib_experimental_filesystem)
   std::cout << "__cpp_lib_experimental_filesystem!" << std::endl;
-#elif defined(CPPFS_IS_BOOSTFS)
-  std::cout << "boost::filesystem" << std::endl;
 #else
   std::cerr << "no filesystem" << std::endl;
 #endif
