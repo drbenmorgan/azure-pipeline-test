@@ -1,12 +1,14 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+# Only on pushes to master for now
 trigger:
 - master
 
+# Use jobs so can split into directly hosted (on Azure) and in-Docker
+# Not clear yet if/how can use a strategy matrix with VMs and Containers
 jobs:
+# Job(s) that can run directly in Azure VMs
 - job: Azure
   strategy:
     matrix:
@@ -23,12 +25,16 @@ jobs:
   steps:
   - template: .azure-templates/cmake-steps.yml
 
-- job: DockerCentOS7
+# Job that runs in a container on a VM
+- job: Docker
+  strategy:
+    matrix:
+      centos-7:
+        containerName: centos:7
+  container: $(containerName)
   pool:
     vmImage: 'ubuntu-16.04'
-  container: centos:7
+  # Fails for now as we need to install packages in the container,
+  # or provide a prebuilt container with those packages
   steps:
-  - script: uname -a
-  - script: ls /etc
-  - script: ls -larth
   - template: .azure-templates/cmake-steps.yml
