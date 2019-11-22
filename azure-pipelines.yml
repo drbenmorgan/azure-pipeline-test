@@ -15,7 +15,8 @@ jobs:
   - script: echo hello from Ubuntu 18.04
   - task: CMake@1
     inputs:
-      cmakeArgs: '..'
+      cmakeArgs: '-DCMAKE_BUILD_MODE=Debug ..'
+  - script: cmake --build ./build --config Debug
 - job: macOS
   pool:
     vmImage: 'macOS-10.14'
@@ -23,7 +24,8 @@ jobs:
   - script: echo hello from macOS 10.14
   - task: CMake@1
     inputs:
-      cmakeArgs: '..'
+      cmakeArgs: '-DCMAKE_BUILD_MODE=Debug ..'
+  - script: cmake --build ./build --config Debug
 - job: Windows
   pool:
     vmImage: 'windows-2019'
@@ -31,4 +33,6 @@ jobs:
   - script: echo hello from Windows 2019
   - task: CMake@1
     inputs:
-      cmakeArgs: '..'
+      cmakeArgs: '-DCMAKE_BUILD_MODE=Debug ..'
+  - script: cmake --build ./build --config Debug
+      
