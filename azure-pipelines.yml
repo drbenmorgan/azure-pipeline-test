@@ -34,7 +34,7 @@ jobs:
       centos-7:
         containerName: 'centos:7'
       centos-8:
-        containerName: 'centos:8'
+        containerName: 'benmorgan/centos-azure:8'
   pool:
     vmImage: 'ubuntu-16.04'
   container:
@@ -42,5 +42,4 @@ jobs:
   # Fails for now as we need to install packages in the container,
   # or provide a prebuilt container with those packages
   steps:
-  - script: yum install -y centos-release-scl-rh
   - template: .azure-templates/cmake-steps.yml
