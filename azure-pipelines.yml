@@ -32,7 +32,8 @@ jobs:
   strategy:
     matrix:
       centos-7:
-        containerName: 'centos:7'
+        containerName: 'benmorgan/centos-azure:7'
+        env_file: '/opt/rh/devtoolset-8/enable'
       centos-8:
         containerName: 'benmorgan/centos-azure:8'
   pool:
@@ -42,4 +43,9 @@ jobs:
   # Fails for now as we need to install packages in the container,
   # or provide a prebuilt container with those packages
   steps:
+  - script: |
+      [[ ! -z "$(env_file)" ]] && source $(env_file)
+      cmake --version
+      gcc --version
+    displayName: Display CentOS tooling versions
   - template: .azure-templates/cmake-steps.yml
