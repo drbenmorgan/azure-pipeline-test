@@ -53,6 +53,7 @@ jobs:
       [[ ! -z "$(env_file)" ]] && source $(env_file)
       # Essentially the CMake task
       mkdir build
-      cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
-      cmake --build build
-      CTEST_OUTPUT_ON_FAILURE=1 cmake --build build --target test
+      pwd
+      cmake -DCMAKE_BUILD_TYPE=Debug -S $PWD -B $PWD/build
+      cmake --build $PWD/build
+      CTEST_OUTPUT_ON_FAILURE=1 cmake --build $PWD/build --target test
