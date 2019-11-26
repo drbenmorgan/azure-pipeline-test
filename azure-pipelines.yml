@@ -36,7 +36,6 @@ jobs:
         env_file: '/opt/rh/devtoolset-8/enable'
       centos-8:
         containerName: 'benmorgan/centos-azure:8'
-        env_file: ''
   pool:
     vmImage: 'ubuntu-16.04'
   container:
@@ -51,10 +50,17 @@ jobs:
    #
   steps:
   - script: echo $ENV_FILE
-  - script: |
-      [[ ! -z "$(env_file)" ]] && source $(env_file)
-      mkdir build
-      cd build
-      cmake -DCMAKE_BUILD_TYPE=Debug ..
-      cmake --build .
-      CTEST_OUTPUT_ON_FAILURE=1 ctest 
+  - script: mkdir build && cd build
+  - script: .azure-templates/sclrun cmake -DCMAKE_BUILD_TYPE=Debug ..
+  - script: .azure-templates/sclrun cmake --build .
+  - script: .azure-templates/sclrun ctest
+    env: {
+      CTEST_OUTPUT_ON_FAILURE: 1
+    }
+
+    #    [[ ! -z "$(env_file)" ]] && source $(env_file)
+    #      mkdir build
+    #      cd build
+    #      cmake -DCMAKE_BUILD_TYPE=Debug ..
+    #      cmake --build .
+    #      CTEST_OUTPUT_ON_FAILURE=1 ctest 

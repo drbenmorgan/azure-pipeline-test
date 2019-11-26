@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Wrapper to exec a command inside an environment configured by sourceing a script
+# Azure pipelines has no immediately obvious way to share a full environment between
+# steps
+# Main use case is Software Collections
+
+# Expects an environment variable named "ENV_FILE"
+
+[[ ! -z "$ENV_FILE" && ! -f "$ENV_FILE" ]] && exit 1
+
+[[ ! -z "$ENV_FILE" ]] && source $ENV_FILE
+
+exec "$@"
+
