@@ -49,7 +49,7 @@ jobs:
   #
   steps:
   - script: |
-      [[ ! -z "$(env_file)" ]] && source $(env_file)
+      [[ ! -z $[variables.env_file] ]] && source $[variables.env_file]
       # Essentially the CMake task
       mkdir build
       cmake -DCMAKE_BUILD_TYPE=Debug -S ./ -B ./build
