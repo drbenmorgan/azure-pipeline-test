@@ -50,10 +50,16 @@ jobs:
    #
   steps:
   - script: echo $ENV_FILE
-  - script: mkdir build && cd build
-  - script: .azure-templates/sclrun cmake -DCMAKE_BUILD_TYPE=Debug ..
-  - script: .azure-templates/sclrun cmake --build .
-  - script: .azure-templates/sclrun ctest
+  - script: mkdir build
+  - script: ../.azure-templates/sclrun cmake -DCMAKE_BUILD_TYPE=Debug ..
+    displayName: CMake Configure
+    workingDirectory: build
+  - script: ../.azure-templates/sclrun cmake --build .
+    displayName: CMake Build
+    workingDirectory: build
+  - script: ../.azure-templates/sclrun ctest
+    displayName: CTest
+    workingDirectory: build
     env: {
       CTEST_OUTPUT_ON_FAILURE: 1
     }
