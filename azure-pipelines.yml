@@ -51,7 +51,7 @@ jobs:
   steps:
   - script: |
       cat $0
-      [[ ! -z $(env_file) ]] && source $(env_file)
+      [[ ! -z "$(env_file)" ]] && source $(env_file)
       # Essentially the CMake task
       pwd
       mkdir build
