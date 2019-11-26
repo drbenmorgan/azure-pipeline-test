@@ -44,15 +44,14 @@ jobs:
   # for an example using containers and devtoolset
   # NB: The centos7 container is setup with cmake aliased to (yum installed) cmake3!
   # Environment setup by source env_file **NOT** persisted to subsequent steps!
-  # So just to check things work, run in one step...
+  # Run in one step to test, to separate configure/make/test steps would need setup
+  # script wrapping env setup and run in each step.
+  #
   steps:
   - script: |
       [[ ! -z "$(env_file)" ]] && source $(env_file)
-      cmake --version
-      gcc --version
       # Essentially the CMake task
       mkdir build
-      cd build
-      cmake -DCMAKE_BUILD_TYPE=DEBUG ..
-      make
-      make test
+      cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
+      cmake --build build
+      CTEST_OUTPUT_ON_FAILURE=1 cmake --build --target test
