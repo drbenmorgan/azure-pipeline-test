@@ -50,12 +50,9 @@ jobs:
   #
   steps:
   - script: |
-      cat $0
       [[ ! -z "$(env_file)" ]] && source $(env_file)
       # Essentially the CMake task
-      pwd
       mkdir build
-      ls
-      cmake -DCMAKE_BUILD_TYPE=Debug -S ./ -B ./build
-      cmake --build ./build
-      CTEST_OUTPUT_ON_FAILURE=1 cmake --build ./build --target test
+      cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
+      cmake --build build
+      CTEST_OUTPUT_ON_FAILURE=1 cmake --build build --target test
