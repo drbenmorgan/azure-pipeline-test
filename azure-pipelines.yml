@@ -50,6 +50,7 @@ jobs:
       # Essentially the CMake task
    #
   steps:
+  - script: echo $ENV_FILE
   - script: |
       [[ ! -z "$(env_file)" ]] && source $(env_file)
       mkdir build
