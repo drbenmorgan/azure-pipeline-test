@@ -50,7 +50,7 @@ jobs:
   #
   steps:
   - script: |
-      [[ ! -z "$(env_file)" ]] && source $(env_file)
+    #[[ ! -z "$(env_file)" ]] && source $(env_file)
       # Essentially the CMake task
       mkdir build
       pwd
