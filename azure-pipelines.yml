@@ -47,13 +47,13 @@ jobs:
   # Environment setup by source env_file **NOT** persisted to subsequent steps!
   # Run in one step to test, to separate configure/make/test steps would need setup
   # script wrapping env setup and run in each step.
-      #[[ ! -z "$(env_file)" ]] && source $(env_file)
       # Essentially the CMake task
    #
   steps:
   - script: |
-      cmake --version
+      [[ ! -z "$(env_file)" ]] && source $(env_file)
       mkdir build
-      cmake -DCMAKE_BUILD_TYPE=Debug -S `pwd` -B `pwd`/build
-      cmake --build `pwd`/build
-      CTEST_OUTPUT_ON_FAILURE=1 cmake --build `pwd`/build --target test
+      cd build
+      cmake -DCMAKE_BUILD_TYPE=Debug ..
+      cmake --build .
+      CTEST_OUTPUT_ON_FAILURE=1 ctest 
