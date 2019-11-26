@@ -43,10 +43,16 @@ jobs:
   # See https://github.com/SimpleITK/SimpleITK/blob/master/Testing/CI/Azure/azure-pipelines-batch.yml
   # for an example using containers and devtoolset
   # NB: The centos7 container is setup with cmake aliased to (yum installed) cmake3!
+  # Environment setup by source env_file **NOT** persisted to subsequent steps!
+  # So just to check things work, run in one step...
   steps:
   - script: |
       [[ ! -z "$(env_file)" ]] && source $(env_file)
       cmake --version
       gcc --version
-    displayName: Display CentOS tooling versions
-  - template: .azure-templates/cmake-steps.yml
+      # Essentially the CMake task
+      mkdir build
+      cd build
+      cmake -DCMAKE_BUILD_TYPE=DEBUG ..
+      make
+      make test
